@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sortField: 'created_at',
     sortOrder: 'DESC',
     currentNote: null,
+    searchTimeout: null, // Biến để lưu timeout của chức năng tìm kiếm
   };
 
   // Khởi tạo modals
@@ -498,30 +499,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
   
+  // Hàm debounce - ngăn gọi hàm quá nhiều lần
+  const debounce = (func, delay) => {
+    return function() {
+      const context = this;
+      const args = arguments;
+      clearTimeout(state.searchTimeout);
+      state.searchTimeout = setTimeout(() => func.apply(context, args), delay);
+    };
+  };
+  
   // Tìm kiếm ghi chú với hiệu ứng
-  const searchNotes = async () => {
+  const searchNotes = async (isRealtime = false) => {
     const searchTerm = searchInput.value.trim();
+    const searchSpinner = document.querySelector('.search-spinner');
+    
+    // Hiển thị spinner trong ô tìm kiếm
+    if (isRealtime) {
+      searchSpinner.style.display = 'block';
+    }
     
     if (!searchTerm) {
+      searchSpinner.style.display = 'none';
       loadNotes();
       return;
     }
     
-    // Hiển thị hiệu ứng đang tìm kiếm
-    notesList.innerHTML = `
-      <div class="col-12 text-center py-5">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Đang tìm kiếm...</span>
+    // Chỉ hiển thị spinner toàn màn hình nếu không phải tìm kiếm realtime
+    if (!isRealtime) {
+      notesList.innerHTML = `
+        <div class="col-12 text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Đang tìm kiếm...</span>
+          </div>
+          <p class="mt-2">Đang tìm kiếm ghi chú...</p>
         </div>
-        <p class="mt-2">Đang tìm kiếm ghi chú...</p>
-      </div>
-    `;
+      `;
+    }
     
     try {
       const results = await api.searchNotes(searchTerm);
       state.notes = results;
       
-      // Đợi một chút để hiển thị spinner
+      // Luôn ẩn spinner trong ô tìm kiếm sau khi hoàn thành
+      searchSpinner.style.display = 'none';
+      
+      // Đợi một chút để hiển thị spinner nếu không phải realtime
+      const renderDelay = isRealtime ? 0 : 300;
       setTimeout(() => {
         renderNotes(results);
         
@@ -539,13 +563,17 @@ document.addEventListener('DOMContentLoaded', () => {
           item.classList.remove('active');
         });
         updateCategoryCounts(); // Cập nhật số lượng ghi chú trong danh mục
-      }, 300);
+      }, renderDelay);
     } catch (error) {
       console.error('Lỗi khi tìm kiếm:', error);
+      searchSpinner.style.display = 'none';
       showToast('Lỗi', 'Có lỗi xảy ra khi tìm kiếm ghi chú!', 'danger');
       loadNotes();
     }
   };
+  
+  // Hàm tìm kiếm với debounce
+  const debouncedSearch = debounce(() => searchNotes(true), 400);
   
   // Thêm danh mục mới
   const addCategory = async () => {
@@ -943,6 +971,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.getElementById('saveCategoryBtn').addEventListener('click', addCategory);
     document.getElementById('searchButton').addEventListener('click', searchNotes);
+    
+    // Sự kiện tìm kiếm realtime khi gõ
+    searchInput.addEventListener('input', debouncedSearch);
+    
+    // Giữ lại sự kiện nhấn Enter
     searchInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         searchNotes();
