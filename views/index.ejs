@@ -22,6 +22,11 @@
         <div class="d-flex align-items-center gap-2 header-actions flex-nowrap">
           <div class="input-group">
             <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm...">
+            <span class="search-spinner position-absolute" style="right: 45px; top: 50%; transform: translateY(-50%); display: none;">
+              <div class="spinner-border spinner-border-sm text-secondary" role="status">
+                <span class="visually-hidden">Đang tìm kiếm...</span>
+              </div>
+            </span>
             <button class="btn btn-light" type="button" id="searchButton">
               <i class="bi bi-search"></i>
             </button>
