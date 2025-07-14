@@ -1,12 +1,13 @@
-require('dotenv').config();
+// Không cần require dotenv ở đây vì config.js đã xử lý
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./src/database/db');
+const config = require('./config');
 
 // Khởi tạo ứng dụng Express
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = config.port;
 
 // Cấu hình middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,4 +32,4 @@ app.get('/', (req, res) => {
 // Khởi động server
 app.listen(PORT, () => {
   console.log(`Server đang chạy trên cổng ${PORT}`);
-}); 
+});
