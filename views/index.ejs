@@ -102,7 +102,7 @@
 
   <!-- Modal Thêm/Sửa Ghi chú -->
   <div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title fw-bold" id="noteModalLabel">
@@ -113,23 +113,38 @@
         <div class="modal-body">
           <form id="noteForm">
             <input type="hidden" id="noteId">
-            <div class="mb-3">
-              <label for="noteTitle" class="form-label">Tiêu đề</label>
-              <input type="text" class="form-control" id="noteTitle" required>
-            </div>
-            <div class="mb-3">
-              <label for="noteContent" class="form-label">Nội dung</label>
-              <textarea class="form-control" id="noteContent" rows="5"></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="noteNote" class="form-label">Ghi chú</label>
-              <textarea class="form-control" id="noteNote" rows="3"></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="noteCategory" class="form-label">Danh mục</label>
-              <select class="form-select" id="noteCategory">
-                <!-- Danh sách danh mục sẽ được tạo động bằng JavaScript -->
-              </select>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="mb-3">
+                  <label for="noteTitle" class="form-label">Tiêu đề</label>
+                  <input type="text" class="form-control" id="noteTitle" required>
+                </div>
+                <div class="mb-3">
+                  <label for="noteContent" class="form-label">Nội dung</label>
+                  <textarea class="form-control" id="noteContent" rows="15" style="resize: vertical;"></textarea>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card h-100">
+                  <div class="card-header">
+                    <h6 class="mb-0 fw-bold">
+                      <i class="bi bi-gear me-2"></i>Tùy chọn
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="mb-3">
+                      <label for="noteCategory" class="form-label">Danh mục</label>
+                      <select class="form-select" id="noteCategory">
+                        <!-- Danh sách danh mục sẽ được tạo động bằng JavaScript -->
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="noteNote" class="form-label">Ghi chú</label>
+                      <textarea class="form-control" id="noteNote" rows="5"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </form>
         </div>
