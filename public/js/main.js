@@ -487,6 +487,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     try {
       await api.deleteNote(state.currentNote.id);
+      // Reset trạng thái
+      state.currentNote = null;
+      
+      // Khôi phục nút xóa trước khi ẩn modal
+      deleteBtn.disabled = false;
+      deleteBtn.innerHTML = originalBtnText;
+
       noteModal.hide();
       showToast('Thành công', 'Ghi chú đã được xóa thành công!', 'success');
       loadNotes();
