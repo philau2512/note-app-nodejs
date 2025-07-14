@@ -4,6 +4,7 @@ npm-debug.log
 yarn-debug.log
 yarn-error.log
 .npm
+dist
 
 # Các file môi trường và cấu hình
 .env
@@ -12,6 +13,7 @@ yarn-error.log
 .env.test
 .env.production
 config/local.js
+config.js
 
 # Logs
 logs
@@ -33,7 +35,6 @@ coverage/
 .nyc_output/
 
 # Bỏ qua hình ảnh (trừ những hình trong public/images)
-*.png
 *.jpg
 *.jpeg
 *.gif
