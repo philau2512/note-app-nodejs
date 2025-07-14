@@ -1,0 +1,27 @@
+// Cấu hình cứng cho ứng dụng
+const config = {
+  port: 3000,
+  db: {
+    host: 'localhost',
+    user: 'root',
+    password: 'pass',
+    database: 'note_app_db'
+  },
+  app: {
+    name: 'Note App Vip'
+  }
+};
+
+// Export cấu hình (ưu tiên biến môi trường nếu có, nếu không thì dùng giá trị cứng)
+module.exports = {
+  port: process.env.PORT || config.port,
+  db: {
+    host: process.env.DB_HOST || config.db.host,
+    user: process.env.DB_USER || config.db.user,
+    password: process.env.DB_PASSWORD || config.db.password,
+    database: process.env.DB_NAME || config.db.database
+  },
+  app: {
+    name: process.env.APP_NAME || config.app.name
+  }
+};
