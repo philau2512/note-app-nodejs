@@ -1,6 +1,8 @@
 # Ứng dụng Ghi chú (Note App)
 
-Một ứng dụng ghi chú đơn giản sử dụng Node.js, Express và MySQL.
+Một ứng dụng ghi chú đơn giản sử dụng Node.js, Express và MySQL. ( backend + frontend run on localhost )
+
+<img src="https://res.cloudinary.com/dkepitcb7/image/upload/v1752639061/Screenshot_2025-07-16_111040_uvyjcb.png" width=500>
 
 ## Tính năng
 
